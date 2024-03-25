@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
-public class SendHttp {
+public class SendHttp1 {
 
     public static void main(String[] args) throws IOException {
         ReadProperties readProperties = new ReadProperties();

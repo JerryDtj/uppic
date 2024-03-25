@@ -1,4 +1,4 @@
-package com.jerry.typora.plugin;
+package typora.uppic.plugin;
 
 import okhttp3.*;
 import org.jetbrains.annotations.NotNull;
@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
