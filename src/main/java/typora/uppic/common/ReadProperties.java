@@ -24,7 +24,6 @@ public class ReadProperties {
 //        获取jar包路径
         URL url = this.getClass().getProtectionDomain().getCodeSource().getLocation();
         logger.debug("urlpath:{}",url.getPath());
-//        System.out.println("urlpath:"+url.getPath());
         String jarAllPath = url.getPath();
         String jarLocation= jarAllPath.substring(0,jarAllPath.indexOf("/uppic/target/")+"/uppic/target/".length());
         logger.debug("jarLocation:{}",jarLocation);
@@ -32,20 +31,16 @@ public class ReadProperties {
         File file = new File(jarLocation);
         InputStream inputStream;
         if (file.exists()&&file.isFile()){
-//            System.out.println("读取到外部配置");
             logger.debug("读取到外部配置");
             inputStream = new FileInputStream(jarLocation);
 
         }else {
-//            System.out.println("读取到本地配置");
             logger.debug("读取到本地配置");
-//            inputStream = ClassLoader.getSystemResourceAsStream("application.properties");
             inputStream = this.getClass().getClassLoader().getResourceAsStream("application.properties");
         }
         Properties properties = new Properties();
         properties.load(inputStream);
         logger.info("读取到的server地址为:{}",properties.getProperty("uppic.notEmpty.serverUrl"));
-//        System.out.println("读取到的server地址为:"+properties.getProperty("uppic.notEmpty.serverUrl"));
         return properties;
     }
 
@@ -61,7 +56,6 @@ public class ReadProperties {
             String key = o.toString();
             if (key.contains(prefix)){
                 String prefixKey = key.replace(prefix+".","");
-//                System.out.println("prefixkey:"+prefixKey);
                 logger.debug("prefixkey:{}",prefixKey);
                 result.put(prefixKey,prop.getProperty(key));
             }

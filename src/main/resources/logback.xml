@@ -31,7 +31,7 @@
     level:用来设置打印级别，大小写无关：TRACE, DEBUG, INFO, WARN, ERROR, ALL 和 OFF (关掉)， 默认debug（可忽略大小写）
     <root>可以包含零个或多个<appender-ref>元素，标识这个输出位置将会被本日志级别控制。
     -->
-    <root level="ERROR"> <!--打印规则：只打印不低于当前级别的日志-->
+    <root level="DEBUG"> <!--打印规则：只打印不低于当前级别的日志-->
         <appender-ref ref="CONSOLE"/> <!--如果这个地方不配置关联打印的位置，改位置将不会记录日志-->
         <appender-ref ref="FILE" />
     </root>

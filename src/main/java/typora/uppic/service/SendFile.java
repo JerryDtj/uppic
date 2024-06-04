@@ -8,8 +8,7 @@ import org.slf4j.LoggerFactory;
 import typora.uppic.common.ApiResult;
 import typora.uppic.common.ReadProperties;
 
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.util.Map;
 import java.util.Properties;
 
@@ -55,7 +54,20 @@ public class SendFile {
         }else {
             fileName = fileUrl.substring(fileUrl.lastIndexOf("/")+1,fileUrl.length());
         }
-        RequestBody fileBody = RequestBody.create(file, MediaType.parse("image/png"));
+
+            FileReader fileReader = new FileReader(file);
+            BufferedReader reader = new BufferedReader(fileReader);
+            StringBuilder builder = new StringBuilder();
+            String temp = "";
+            while ((temp = reader.readLine()) != null) {
+                builder.append(temp + "\n");
+            }
+            reader.close();
+            logger.debug("图片内容为:{}",builder);
+
+
+
+        RequestBody fileBody = RequestBody.create(builder.toString(), MediaType.parse("application/octet-stream"));
 
         //准备塞入post入参
         Map<String,String> param = readProperties.readBundleValueByPrefix(properties,"uppic.post.param");
@@ -90,12 +102,12 @@ public class SendFile {
         OkHttpClient httpClient = okHttpBuilder.build();
         Response response = httpClient.newCall(request).execute();
         logger.info("请求server发送成功,返回code为:{}",response.code());
-//        System.out.println(response.body().string());
 
         //封装状态码准备返回
         ApiResult result;
         if (response.isSuccessful()){
             String responseBodyString = response.body().string();
+            logger.debug("请求响应数据为:{}",responseBodyString);
             ObjectMapper mapper = new ObjectMapper();
             JsonNode responseJson = mapper.readTree(responseBodyString);
             String returnKey = properties.getProperty("uppic.returnkey");
@@ -112,5 +124,11 @@ public class SendFile {
             result = ApiResult.fail(response.code(),response.message());
         }
         return result;
+    }
+
+    public static void main(String[] args) throws IOException {
+        SendFile sendFile = new SendFile();
+        ApiResult apiResult = sendFile.toNetWorkDisk("/Users/dengtianjiao/Library/Application Support/typora-user-images/image-20240327114106772.png");
+        System.out.println(apiResult.getFileUrl()+" "+apiResult.getCode());
     }
 }
