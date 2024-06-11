@@ -15,11 +15,11 @@ import java.net.http.HttpResponse;
 public class Main {
     private static Logger logger = LoggerFactory.getLogger(Main.class);
     public static void main(String[] args) throws IOException {
-        logger.debug("收到请求,入参为:{}",args);
+        logger.debug("收到请求,入参为:{} ",args);
         SendFile sendFile = new SendFile();
         boolean justOne = true;
         for (String url: args){
-            url = url.replaceAll("\\\\","/");
+            url = url.replaceAll("\\\\","/"); 
             ApiResult result = sendFile.toNetWorkDisk(url);
             if (result.getSuccess()){
                 if (justOne){
